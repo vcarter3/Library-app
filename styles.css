@@ -1,0 +1,18 @@
+.libraryDisplay{
+    display: flex;
+    flex-direction : row;
+    background-color : gray;
+  }
+  
+  .libraryDisplay div{
+    display: flex;
+    flex-direction : column;
+    background-color : white;
+    margin:5px;
+    flex-wrap: wrap;
+  }
+
+
+  .libraryDisplay div:last-child > button{
+    background-color: blue;
+  }
