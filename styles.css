@@ -2,6 +2,8 @@
     display: flex;
     flex-direction : row;
     background-color : gray;
+    flex-wrap: wrap;
+
   }
   
   .libraryDisplay div{
@@ -9,10 +11,20 @@
     flex-direction : column;
     background-color : white;
     margin:5px;
-    flex-wrap: wrap;
   }
 
 
   .libraryDisplay div:last-child > button{
     background-color: blue;
+  }
+
+
+  .libraryDisplay div:first-of-type{
+    background-color: pink;
+  }
+
+
+ 
+  .libraryDisplay > div:first-of-type > button{
+    background-color: red;
   }
