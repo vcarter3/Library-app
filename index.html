@@ -7,13 +7,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles.css">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
 <body>
     <h1> Book List </h1>
     <div class="libraryDisplay">
-        <button id="add"> add me </button>
+        <button id="add"> <i class="material-symbols-outlined">add</i> </button>
+
+        <div class="form">
+            <div class="title-box">
+
+                <textarea placeholder="Book Title" type="text" id="userTitle" required="" name="text" rows="2" cols="10" wrap="soft" maxlength="40" minlength="2"></textarea>
+
+            </div>
+
+            <div class="author-box">By <input type="text" placeholder="Author" name="userAuthor" id="userAuthor" required="">
+            </div>
+
+
+
+            <div class="pages-box">Pages:
+                <input type="number" placeholder="Pages" name="userPages" id="userPages" required="">
+            </div>
+
+
+            <div class="read-box">Status:
+                <input type="button" id="userRead" value="Finished">
+            </div>
+
+
+            <button id="userSubmit"> 
+                <i class="material-symbols-outlined">done</i>
+            </button>
+        </div>
+
     </div>
 </body>
 <script src="app.js"></script>
