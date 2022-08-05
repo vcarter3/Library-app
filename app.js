@@ -1,11 +1,15 @@
 
-let myLibrary = [];
+let myLibrary = {};
 
-function Book(title, author, pages, read) {
-    this.title = title
-    this.author = author
-    this.pages = pages
-    this.read = false
+
+
+
+function Book(title, author, pages, read, id) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+    this.id = id;
 
     this.printTitle = function () {
         return this.title
@@ -17,14 +21,34 @@ function Book(title, author, pages, read) {
         return this.pages
     }
     this.printRead = function () {
-        return this.read
+        if (this.read) {
+            return "Finished";
+        } else {
+            return "Not read";
+        }
+    }
+    this.printId = function () {
+        return this.id
+    }
+    this.setId = function (id) {
+        this.id = id;
+    }
+    this.changeRead = function () {
+        this.read = !this.read;
     }
 }
 
 
 function addBookToLibrary(...books) {
+    let lastIndex = 0;
     for (const book of books) {
-        myLibrary.push(book)
+
+        myLibrary[lastIndex] = book;
+
+        console.log(myLibrary)
+        //myLibrary.push(book);
+        book.setId(lastIndex);
+        lastIndex += 1;
     }
 
 }
@@ -33,13 +57,13 @@ function addBookToLibrary(...books) {
 const libraryShelf = document.querySelector("body > div");
 
 
-function createBook(title,author,pages,read){
+function createBook(newBook) {
 
     const parent = document.createElement("div");
+    parent.className = newBook.printId();
     const child1 = document.createElement("h3");
-    child1.textContent = title;
+    child1.textContent = newBook.printTitle();
     parent.appendChild(child1);
-
 
     //<p>by <span class="author">AuthorName</span></p>
 
@@ -48,7 +72,7 @@ function createBook(title,author,pages,read){
 
     const grandChild = document.createElement("span");
     grandChild.className = "author";
-    grandChild.textContent = author;
+    grandChild.textContent = newBook.printAuthor();
     child2.appendChild(grandChild);
     parent.appendChild(child2);
 
@@ -58,7 +82,7 @@ function createBook(title,author,pages,read){
     child3.textContent = "Pages: ";
     const grandChild2 = document.createElement("span");
     grandChild2.className = "pages";
-    grandChild2.textContent = pages;
+    grandChild2.textContent = newBook.printPages();
     child3.appendChild(grandChild2);
     parent.appendChild(child3);
 
@@ -69,19 +93,23 @@ function createBook(title,author,pages,read){
     child4.textContent = "Status: ";
     const grandChild3 = document.createElement("button");
     grandChild3.className = "read";
-    if(read){
-        grandChild3.textContent = "Done";
-    }else{
-        grandChild3.textContent = "Not done";
-    }
+    grandChild3.textContent = newBook.printRead();
     
+    
+    
+    
+
     child4.appendChild(grandChild3);
     parent.appendChild(child4);
 
     //<button>bin</button>
 
     const child5 = document.createElement("button");
-    child5.textContent = "bin me";
+    //child5.textContent = "bin me";
+
+    child5.innerHTML = "<span class=\"material-symbols-outlined\">Delete</span>";
+
+
     child5.className = "bin";
     parent.appendChild(child5);
 
@@ -89,26 +117,52 @@ function createBook(title,author,pages,read){
     // send book to shelf
     //libraryShelf.appendChild(parent);
 
-
     //send book to front of shelf
+    //const firstBook = document.querySelector(".libraryDisplay div:first-of-type");
 
-    const firstBook = document.querySelector(".libraryDisplay div:first-of-type");
+
+    const firstBook = document.querySelector(".libraryDisplay > div:nth-of-type(2)");
     libraryDisplay.insertBefore(parent, firstBook);
 
 
-    // remove button event listener
-    const buttonRemove = document.querySelector(".libraryDisplay > div:first-of-type > button");
+
+    // READ BUTTON
+    const buttonRead = document.querySelector(".libraryDisplay>div:nth-of-type(2) .read");
+    buttonRead.addEventListener('click',
+        (e) => {
+            // find book id
+            let bookId = parseInt(e.composedPath()[2].className);
+            console.log(bookId);
+ 
+            // change value in myLib
+            myLibrary[bookId].changeRead();
+            
+            // find book read status
+            
+            e.target.textContent = myLibrary[bookId].printRead();
+
+            // ammend the library  
+        });
+
+
+
+    // REMOVE BUTTON FUNCTIONALITY 
+    // remove button and ?? event listener
+    //    const buttonRemove = document.querySelector(".libraryDisplay > div:first- > button");
+    const buttonRemove = document.querySelector(".libraryDisplay > div:nth-of-type(2) > button");
     buttonRemove.addEventListener('click',
         (e) => {
             removeElement(e);
+            removeBook(e);
         });
 
 
 }
 
 function displayBooks() {
-    for (let i = 0; i < myLibrary.length; i++) {
-        createBook(myLibrary[i].printTitle(),myLibrary[i].printAuthor(),myLibrary[i].printPages(),myLibrary[i].printRead());
+    for (var id in myLibrary) {
+        let book = myLibrary[id];
+        createBook(book);
     }
 }
 
@@ -117,39 +171,120 @@ const add = document.querySelector('#add');
 const libraryDisplay = document.querySelector('.libraryDisplay');
 
 
+function removeBook(e) {
+    // need to remove book from myLibrary 
+
+    console.log(myLibrary);
+    // get book id to remove
+    console.log(e.composedPath()[2].className);
+
+    let bookId = e.composedPath()[2].className;
+
+    delete myLibrary[bookId];
+
+
+    console.log(myLibrary);
+
+}
+
 
 // event listeners 
 function removeElement(e) {
 
     // remove button + event listener?
     console.log(e.target);
-    e.target.parentElement.remove();
 
-    // need to remove book from myLibrary 
+    e.target.parentElement.parentElement.remove();
 
-    console.log(myLibrary);
+
 };
 
 
-function addElement() {
-
-    // need to get user input
+function addElement(newBook) {
 
     // need to add book to myLibrary 
+    myLibrary[newBook.printId()] = newBook;
 
-
-    // display book
-    createBook("title","author",12,false);
+    // need to display book
+    createBook(newBook);
 }
 
-add.addEventListener('click', (e) => {
-    addElement();
+
+function readUserInput() {
+    // get new id
+    let maxId = 0;
+    for (var key in myLibrary) {
+        //var value = dict[key];
+        if (key > maxId) {
+            maxId = parseInt(key);
+        }
+    }
+    let newID = maxId + 1;
+
+
+    let userTitle = document.querySelector("#userTitle").value;
+    let userAuthor = document.querySelector("#userAuthor").value;
+    let userPages = document.querySelector("#userPages").value;
+    let userRead = document.querySelector("#userRead").value;
+
+    if (userRead == "Finished") {
+        userRead = true;
+    } else if (userRead == "Not read") {
+        userRead = false;
+    }
+
+    console.log(userRead);
+
+    return new Book(userTitle, userAuthor, userPages, userRead, newID);
+
+}
+
+
+
+const userRead = document.querySelector("#userRead")
+userRead.addEventListener('click', (e) => {
+    //show form 
+    
+    if (userRead.value == "Finished") {
+        userRead.value = "Not read";
+    } else {
+        userRead.value = "Finished";
+    }
+
 });
 
 
 
 
 
+const form = document.querySelector(".libraryDisplay .form");
+add.addEventListener('click', (e) => {
+    
+    
+    //show form 
+    form.style = 'display:flex';
+    add.style.display = "none";
+
+});
+
+// add event listener to submit button
+const submit = document.querySelector("#userSubmit");
+
+submit.addEventListener('click', (e) => {
+
+    // get user input
+    //console.log(readUserInput());
+
+    // add new book
+    addElement(readUserInput());
+
+    //hide form
+    form.style.display = 'none';
+    add.style.display = "block";
+
+    // clear user inputs?
+
+});
 
 
 
