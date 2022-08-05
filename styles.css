@@ -1,30 +1,84 @@
-.libraryDisplay{
-    display: flex;
-    flex-direction : row;
-    background-color : gray;
-    flex-wrap: wrap;
 
-  }
+body{
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+  justify-items: center;
+  margin: 10rem;
   
-  .libraryDisplay div{
-    display: flex;
-    flex-direction : column;
-    background-color : white;
-    margin:5px;
-  }
+}
+
+.libraryDisplay {
+  display: flex;
+  flex-direction: row;
+  background-color: gray;
+  flex-wrap: wrap;
+
+}
+
+.libraryDisplay > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: white;
+  width: 13em;
+  height: 20em;
+  border-radius: 0.5rem;
+  margin: 5px;
+}
 
 
-  .libraryDisplay div:last-child > button{
-    background-color: blue;
-  }
+#add {
+  width: 13rem;
+  height: 20rem;
+  margin: 5px;
+  border-radius: 0.5rem;
+  border:none;
+  cursor: pointer;
+}
+
+.libraryDisplay .form {
+  display: none;
+  justify-content: space-evenly
+
+}
 
 
-  .libraryDisplay div:first-of-type{
-    background-color: pink;
-  }
+body>div>div h3 {
+  font-size: 1.5em;
+  color: grey;
+  margin: 0px;
+
+}
+
+.title-box, .title-box textarea, .title-box textarea::placeholder{
+    overflow:hidden; 
+    resize:none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    width: 13rem;
+}
+
+button, #userRead{
+  font-family: 'Montserrat', sans-serif;
+}
 
 
- 
-  .libraryDisplay > div:first-of-type > button{
-    background-color: red;
-  }
+#userAuthor{
+  width: 80%;
+}
+
+
+#userPages{
+  width: 30%;
+}
+
+
+.form .pages-box, .form .author-box{
+  display: inline;
+}
