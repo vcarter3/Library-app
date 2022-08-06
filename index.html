@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
@@ -32,7 +33,7 @@
 
 
             <div class="pages-box">Pages:
-                <input type="number" placeholder="Pages" name="userPages" id="userPages" required="">
+                <input type="number" placeholder="Pages" name="userPages" id="userPages" required="" min="0" oninput="validity.valid||(value='');">
             </div>
 
 
