@@ -1,5 +1,10 @@
-
 let myLibrary = {};
+const libraryShelf = document.querySelector("body > div");
+const addNewBook = document.querySelector('#add');
+const libraryDisplay = document.querySelector('.libraryDisplay');
+const userRead = document.querySelector("#userRead")
+const submit = document.querySelector("#userSubmit");
+const form = document.querySelector(".libraryDisplay .form");
 
 function Book(title, author, pages, read, id) {
     this.title = title;
@@ -7,46 +12,33 @@ function Book(title, author, pages, read, id) {
     this.pages = pages;
     this.read = read;
     this.id = id;
-
-    this.printTitle = function () {
-        return this.title
-    }
-    this.printAuthor = function () {
-        return this.author
-    }
-    this.printPages = function () {
-        return this.pages
-    }
-    this.printRead = function () {
-        if (this.read) {
-            return "Finished";
-        } else {
-            return "Not read";
-        }
-    }
-    this.printId = function () {
-        return this.id
-    }
-    this.setId = function (id) {
-        this.id = id;
-    }
-    this.changeRead = function () {
-        this.read = !this.read;
-    }
 }
 
-
-function addBookToLibrary(...books) {
-    let lastIndex = 0;
-    for (const book of books) {
-        myLibrary[lastIndex] = book;
-        book.setId(lastIndex);
-        lastIndex += 1;
-    }
-
+Book.prototype.printTitle = function () {
+    return this.title
 }
-
-const libraryShelf = document.querySelector("body > div");
+Book.prototype.printAuthor = function () {
+    return this.author
+}
+Book.prototype.printPages = function () {
+    return this.pages
+}
+Book.prototype.printRead = function () {
+    if (this.read) {
+        return "Finished";
+    } else {
+        return "Not read";
+    }
+}
+Book.prototype.printId = function () {
+    return this.id
+}
+Book.prototype.setId = function (id) {
+    this.id = id;
+}
+Book.prototype.changeRead = function () {
+    this.read = !this.read;
+}
 
 function createBook(newBook) {
     const parent = document.createElement("div");
@@ -83,13 +75,8 @@ function createBook(newBook) {
     child4.appendChild(grandChild3);
     parent.appendChild(child4);
 
-    //<button>bin</button>
+    //<button class="bin"><i class="material-symbols-outlined">Delete</i></button>
     const child5 = document.createElement("button");
-    //child5.textContent = "Bin";
-    //child5.className = "bin";
-    //parent.appendChild(child5);
-
-
     child5.className = "bin";
     const binIcon = document.createElement("i");
     binIcon.textContent = "Delete";
@@ -97,23 +84,11 @@ function createBook(newBook) {
     child5.appendChild(binIcon)
     parent.appendChild(child5);
 
-    //child5.innerHTML = "<i class=\"material-symbols-outlined\">Delete</i>";
-
-
-
-    // send book to shelf
-    //libraryShelf.appendChild(parent);
-
     //send book to front of shelf
-    //const firstBook = document.querySelector(".libraryDisplay div:first-of-type");
-
-
     const firstBook = document.querySelector(".libraryDisplay > div:nth-of-type(2)");
     libraryDisplay.insertBefore(parent, firstBook);
-    
 
-
-    // READ BUTTON
+    // addNewBook read button event listener
     const buttonRead = document.querySelector(".libraryDisplay>div:nth-of-type(2) .read");
     buttonRead.addEventListener('click',
         (e) => {
@@ -125,11 +100,7 @@ function createBook(newBook) {
             e.target.textContent = myLibrary[bookId].printRead();
         });
 
-
-
-    // REMOVE BUTTON FUNCTIONALITY 
-    // remove button and ?? event listener
-    //    const buttonRemove = document.querySelector(".libraryDisplay > div:first- > button");
+    // addNewBook remove button event listener    
     const buttonRemove = document.querySelector(".libraryDisplay > div:nth-of-type(2) > button");
     buttonRemove.addEventListener('click',
         (e) => {
@@ -137,68 +108,40 @@ function createBook(newBook) {
             removeElement(e);
             removeBook(e);
         });
-
-
 }
-
-function displayBooks() {
-    for (var id in myLibrary) {
-        let book = myLibrary[id];
-        createBook(book);
-    }
-}
-
-
-const add = document.querySelector('#add');
-const libraryDisplay = document.querySelector('.libraryDisplay');
-
 
 function removeBook(e) {
-    // need to remove book from myLibrary 
-    // get book id to remove
+    // get book id to remove and then remove from myLibrary
     let bookId = parseInt(e.composedPath()[1].className);
     delete myLibrary[bookId];
 }
 
-
-// event listeners 
 function removeElement(e) {
-    // remove button
+    // remove button from page
     e.composedPath()[1].remove();
-
 };
 
-
 function addElement(newBook) {
-
-    // need to add book to myLibrary 
+    // addNewBook book to myLibrary 
     myLibrary[newBook.printId()] = newBook;
-
-    // need to display book
+    // display book
     createBook(newBook);
 }
 
+addNewBook.addEventListener('click', (e) => {
+    //show form 
+    form.style = 'display:flex';
+    addNewBook.style.display = "none";
+});
 
 function readUserInput() {
-    // get new id
-    let maxId = 0;
-    for (var key in myLibrary) {
-        //var value = dict[key];
-        if (key > maxId) {
-            maxId = parseInt(key);
-        }
-    }
-    let newID = maxId + 1;
-
-    
-
-
     let userTitle = document.querySelector("#userTitle").value;
     let userAuthor = document.querySelector("#userAuthor").value;
     let userPages = document.querySelector("#userPages").value;
     let userRead = document.querySelector("#userRead").value;
 
-    if(userTitle == ""|| userAuthor == "" || userPages ==""){
+    if (userTitle == "" || userAuthor == "" || userPages == "") {
+        // Check form is filled in
         return -1
     }
 
@@ -208,15 +151,18 @@ function readUserInput() {
         userRead = false;
     }
 
-    console.log(userRead);
+    // get new id
+    let maxId = 0;
+    for (var id in myLibrary) {
+        if (id > maxId) {
+            maxId = parseInt(id);
+        }
+    }
+    let newID = maxId + 1;
 
     return new Book(userTitle, userAuthor, userPages, userRead, newID);
-
 }
 
-
-
-const userRead = document.querySelector("#userRead")
 userRead.addEventListener('click', (e) => {
     // change display value    
     if (userRead.value == "Finished") {
@@ -227,52 +173,45 @@ userRead.addEventListener('click', (e) => {
 
 });
 
-
-const form = document.querySelector(".libraryDisplay .form");
-add.addEventListener('click', (e) => {
-    
-    
-    //show form 
-    form.style = 'display:flex';
-    add.style.display = "none";
-
-});
-
-// add event listener to submit button
-const submit = document.querySelector("#userSubmit");
-
 submit.addEventListener('click', (e) => {
-
-
     // get user input
     let userBook = readUserInput();
-
-    if(userBook == -1){
+    if (userBook == -1) {
         return
     }
-
-    // add new book
+    // addNewBook new book
     addElement(userBook);
-
     //hide form
     form.style.display = 'none';
-    add.style.display = "block";
-
-    // clear user inputs?
-
+    addNewBook.style.display = "block";
 });
 
 
+// Load dummy books
 
-// tests
+function addBookToLibrary(...books) {
+    // Fil myLibrary with some books
+    let lastIndex = 0;
+    for (const book of books) {
+        myLibrary[lastIndex] = book;
+        book.setId(lastIndex);
+        lastIndex += 1;
+    }
+}
+
+function displayBooks() {
+    for (var id in myLibrary) {
+        let book = myLibrary[id];
+        createBook(book);
+    }
+}
+
+
 const animal = new Book("Animal Farm", "George Orwell", 112, true);
 const hobbit = new Book("The Hobbit", "J. R. R. Tolkien", 310, false);
 const gone = new Book("Gone Girl", "Gillian Flynn", 432, true);
 const code = new Book("The Code Book", "Simon Singh", 416, false);
 const alice = new Book("Alice's Adventures in Wonderland", "Lewis Carroll", 176, false);
-
-
-// init
 
 addBookToLibrary(animal, hobbit, gone, code, alice);
 displayBooks()
