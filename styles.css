@@ -1,5 +1,4 @@
-
-body{
+body {
   font-family: 'Montserrat', sans-serif;
   text-align: center;
   display: flex;
@@ -8,7 +7,10 @@ body{
   justify-items: center;
   margin: 10rem;
   background: linear-gradient(0.25turn, #a3cfe2, #e8f9d9, #ffe4c7);
-  
+}
+
+body>h1 {
+  user-select: none;
 }
 
 .libraryDisplay {
@@ -21,7 +23,7 @@ body{
 
 }
 
-.libraryDisplay > div {
+.libraryDisplay>div {
   border: 0.2rem solid;
   display: flex;
   align-items: center;
@@ -36,15 +38,16 @@ body{
 }
 
 
-.libraryDisplay > div:nth-child(3n+3) {
+.libraryDisplay>div:nth-child(3n+3) {
   background: #FFF2C6;
 }
-.libraryDisplay > div:nth-child(4n+4) {
+
+.libraryDisplay>div:nth-child(4n+4) {
   background: #A8FAD6;
 }
 
 #add {
-  background-color :rgb(214, 214, 214);
+  background-color: rgb(214, 214, 214);
   padding: 0px;
   border: 0.2rem solid;
   width: 13.4rem;
@@ -55,7 +58,7 @@ body{
 }
 
 .libraryDisplay .form {
-  background-color :rgb(214, 214, 214);
+  background-color: rgb(214, 214, 214);
 
   display: none;
   justify-content: space-evenly;
@@ -70,23 +73,27 @@ body>div>div h3 {
 
 }
 
-.title-box, .title-box textarea, .title-box textarea::placeholder{
-    overflow:hidden; 
-    resize:none;
-    font-size: 1.5rem;
-    font-weight: bold;
-    font-family: 'Montserrat', sans-serif;
-    text-align: center;
-    width: 13rem;
+.title-box,
+.title-box textarea,
+.title-box textarea::placeholder {
+  overflow: hidden;
+  resize: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  width: 13rem;
 }
 
-button, #userRead{
+button,
+#userRead {
   font-family: 'Montserrat', sans-serif;
   cursor: pointer;
   user-select: none;
 }
 
-#userRead, .read {
+#userRead,
+.read {
   width: 75px;
   color: #000;
   cursor: pointer;
@@ -102,14 +109,15 @@ button, #userRead{
 
 }
 
-#userRead:active, .read:active {
+#userRead:active,
+.read:active {
   box-shadow: 0px 0px 0px 0px;
   top: 5px;
   left: 5px;
 
 }
 
-.bin{
+.bin {
   background-color: pink;
   position: absolute;
   margin-top: 280px;
@@ -117,33 +125,37 @@ button, #userRead{
 
 
 /* stop user clicking on icon instead of button*/
-.material-symbols-outlined{
+.material-symbols-outlined {
   pointer-events: none;
 }
 
-#userAuthor{
+#userAuthor {
   width: 80%;
 }
 
 
-#userPages{
+#userPages {
   width: 30%;
 }
 
 
-.form .pages-box, .form .author-box{
+.form .pages-box,
+.form .author-box {
   display: inline;
 }
 
 
 
-.form .pages-box input, .form .pages-box input::placeholder, .form .author-box input, .form .author-box input::placeholder{
+.form .pages-box input,
+.form .pages-box input::placeholder,
+.form .author-box input,
+.form .author-box input::placeholder {
   font-family: 'Montserrat', sans-serif;
   font-size: 1em;
 }
 
-#userSubmit{
-  background-color:rgb(179, 237, 179);
+#userSubmit {
+  background-color: rgb(179, 237, 179);
   position: absolute;
   margin-top: 280px;
   margin-left: 160px;
