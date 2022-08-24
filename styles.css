@@ -9,6 +9,15 @@ body {
   background: linear-gradient(0.25turn, #a3cfe2, #e8f9d9, #ffe4c7);
 }
 
+.errorMsg{
+  color: #d6d6d6;
+  font-weight: 1000;
+  position: absolute;
+  transition: color 1s ease-out;
+}
+
+
+
 body>h1 {
   user-select: none;
 }

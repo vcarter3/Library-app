@@ -142,6 +142,11 @@ function readUserInput() {
 
     if (userTitle == "" || userAuthor == "" || userPages == "") {
         // Check form is filled in
+        const errorMsg = document.querySelector("body > div > div.form > div.errorMsg");
+        errorMsg.style = "color:red";
+        setTimeout(function () {
+            errorMsg.style = "color:#d6d6d6" 
+        }, 2000);
         return -1
     }
 
